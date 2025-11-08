@@ -1,11 +1,29 @@
 // require('dotenv').config({path: './env'}) breaking consistency of code
 import dotenv from 'dotenv' // improved version
 import connectDB from "./db/index.js";
+import { app } from './app.js';
 
 //approch-2
 connectDB()
-/*const app = express()
+.then(() => {
+    const port = process.env.PORT || 7000
+    app.on("error", (err) => {
+        console.log("Error:", err);
+        throw err
+    })
 
+    app.listen(port , () => {
+        console.log(`server is running at port ${port}`);
+        
+    }) // port not found use 7000 or use one if deployed on the server 
+    // when we put code on server, this thing save us from crash the server 
+})
+.catch((err) => {
+    console.log("MongoDB connection failed !!!", err);
+    
+})
+
+/*const app = express()
 //approch-1
  ;(async()=>{
     try {
